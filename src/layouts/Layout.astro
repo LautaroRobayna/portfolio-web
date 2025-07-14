@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -8,12 +8,20 @@
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<Header />
 		<slot />
 	</body>
 </html>
 
-<style>
-	html,
+<style is:global>
+	:root{
+
+	}
+
+	html{
+		font-family: system-ui, sans-serif;
+	}
+	
 	body {
 		margin: 0;
 		width: 100%;
