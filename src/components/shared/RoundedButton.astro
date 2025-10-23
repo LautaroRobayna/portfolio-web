@@ -1,0 +1,100 @@
+---
+interface Props {
+  href?: string;
+  class?: string;
+  target?: string;
+  rel?: string;
+}
+
+const { href, class: className = "", target, rel } = Astro.props;
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  class={`btn-rounded btn-ghost-rounded btn-through-rounded ${className}`}
+  href={href}
+  target={target}
+  rel={rel}
+>
+  <slot />
+</Tag>
+
+<style>
+/* Rounded Button based on Button Collection */
+.btn-rounded {
+  --hue: 204;
+  position: relative;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-decoration: none;
+  background-color: hsl(var(--hue), 70%, 53%);
+  border: 1px solid hsl(var(--hue), 70%, 53%);
+  border-radius: 50px;
+  outline: transparent;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: 0.3s;
+  font-family: "Inter Variable", system-ui, sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-rounded:hover {
+  background: hsl(var(--hue), 70%, 43%);
+}
+
+.btn-ghost-rounded {
+  color: hsl(var(--hue), 70%, 53%);
+  background-color: transparent;
+  border-color: hsl(var(--hue), 70%, 53%);
+}
+
+.btn-ghost-rounded:hover {
+  color: white;
+  background: hsl(var(--hue), 70%, 53%);
+}
+
+.btn-through-rounded {
+  transition: 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.btn-through-rounded::before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: hsl(var(--hue), 70%, 53%);
+  transform: scaleX(0);
+  transform-origin: right;
+  mix-blend-mode: color-dodge;
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+  border-radius: 50px;
+}
+
+.btn-through-rounded:hover {
+  color: white;
+  background: transparent;
+}
+
+.btn-through-rounded:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media screen and (max-width: 750px) {
+  .btn-rounded {
+    font-size: 0.8rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+</style>

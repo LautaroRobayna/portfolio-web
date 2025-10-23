@@ -1,0 +1,61 @@
+---
+import GlitchButton from "../shared/GlitchButton.astro";
+import LinkedInIcon from "../icons/LinkedIn.astro";
+import ProfileImage from "../shared/ProfileImage.astro";
+---
+
+<section class="hero-section normal-section" id="home">
+  <div class="mb-6">
+    <ProfileImage src="/profile/profile.webp" alt="Lautaro Robayna" size="md" />
+  </div>
+  <h1>
+    Lautaro Robayna
+  </h1>
+  <h2>Full Stack Developer</h2>
+  <GlitchButton
+    href="https://www.linkedin.com/in/lautaro-robayna-505027313/"
+    target="_blank"
+    rel="noopener"
+  >
+    <LinkedInIcon class="size-4" />
+    Connect on LinkedIn
+  </GlitchButton>
+</section>
+
+<style>
+  .hero-section {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center;
+    color: white;
+    gap: 0 !important;
+  }
+
+  .hero-section h1 {
+    margin-bottom: 8px;
+    font-size: 46px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: "Cinzel", serif;
+  }
+
+  .hero-section h2 {
+    font-size: 24px;
+    font-weight: lighter;
+    margin-bottom: 2rem;
+    font-family: "Cinzel", serif;
+  }
+
+  @media (max-width: 768px) {
+    .hero-section h1 {
+      font-size: 30px;
+    }
+
+    .hero-section h2 {
+      font-size: 16px;
+    }
+  }
+</style>

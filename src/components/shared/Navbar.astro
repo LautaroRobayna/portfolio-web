@@ -1,0 +1,272 @@
+---
+import NavMenu from "./NavMenu.astro";
+
+const menuItems = [
+  { href: "#home", label: "Home" },
+  { href: "#projects", label: "Projects" },
+  { href: "#about", label: "About" },
+  { href: "#contact", label: "Contact" }
+];
+---
+
+<header>
+  <NavMenu />
+</header>
+<input type="checkbox" id="burger-toggle" />
+<label for="burger-toggle" class="burger-menu">
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+</label>
+<div class="overlay"></div>
+<nav class="burger-nav">
+  <ul>
+    {menuItems.map((item) => (
+      <li><a href={item.href}>{item.label}</a></li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+/* Header */
+header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+  z-index: 1000;
+}
+
+/* Full Page Burger Navigation */
+#burger-toggle {
+  position: absolute;
+  appearance: none;
+  opacity: 0;
+}
+
+#burger-toggle:checked {
+  & ~ .overlay {
+    opacity: 1;
+    transform: scale(160);
+  }
+
+  & ~ .burger-nav {
+    pointer-events: auto;
+
+    ul li {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  & ~ main {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  & ~ .burger-menu {
+    .line {
+      &:nth-child(1) {
+        transform: translateY(calc(var(--burger-menu-radius) / 5))
+          rotate(45deg);
+      }
+
+      &:nth-child(2) {
+        transform: scaleX(0);
+      }
+
+      &:nth-child(3) {
+        transform: translateY(calc(var(--burger-menu-radius) / -5))
+          rotate(-45deg);
+      }
+    }
+  }
+}
+
+.burger-menu {
+  --burger-menu-radius: 4em;
+  position: fixed;
+  top: 25px;
+  right: 60px;
+  z-index: 100;
+  display: none;
+  width: var(--burger-menu-radius);
+  height: var(--burger-menu-radius);
+  background: white;
+  border: solid 2px hsla(184, 9%, 62%, 0.4);
+  border-radius: 50%;
+  outline: none;
+  transition: 0.5s ease-in-out;
+}
+
+.burger-menu .line {
+  position: absolute;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: hsla(210, 29%, 24%, 0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+.burger-menu .line:nth-child(1) {
+  top: 30%;
+}
+
+.burger-menu .line:nth-child(2) {
+  top: 50%;
+}
+
+.burger-menu .line:nth-child(3) {
+  top: 70%;
+}
+
+.burger-menu .line::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #2980b9;
+  transform: translateX(-100%);
+  transition: all 0.25s ease;
+}
+
+.burger-menu .line:nth-child(2)::after {
+  transition-delay: 0.1s;
+}
+
+.burger-menu .line:nth-child(3)::after {
+  transition-delay: 0.2s;
+}
+
+.burger-menu:hover {
+  box-shadow: 0.4px 0.4px 0.8px rgba(0, 0, 0, 0.042),
+    1px 1px 2px rgba(0, 0, 0, 0.061), 1.9px 1.9px 3.8px rgba(0, 0, 0, 0.075),
+    3.4px 3.4px 6.7px rgba(0, 0, 0, 0.089),
+    6.3px 6.3px 12.5px rgba(0, 0, 0, 0.108),
+    15px 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.burger-menu:hover .line::after {
+  transform: translateX(0);
+}
+
+.overlay {
+  position: fixed;
+  top: 45px;
+  right: 80px;
+  width: 2em;
+  height: 2em;
+  background: #1a5780;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.5s ease-in-out;
+  will-change: transform;
+}
+
+.burger-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.burger-nav ul {
+  position: fixed;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  list-style-type: none;
+}
+
+.burger-nav ul li {
+  padding: 6px 0;
+  margin: 1em 3em;
+  opacity: 0;
+  transition: 0.6s cubic-bezier(0.365, 0.84, 0.44, 1);
+}
+
+.burger-nav ul li:nth-child(odd) {
+  transform: translateX(-100%);
+}
+
+.burger-nav ul li:nth-child(even) {
+  transform: translateX(100%);
+}
+
+.burger-nav ul li:nth-child(1) { transition-delay: 0.05s; }
+.burger-nav ul li:nth-child(2) { transition-delay: 0.10s; }
+.burger-nav ul li:nth-child(3) { transition-delay: 0.15s; }
+.burger-nav ul li:nth-child(4) { transition-delay: 0.20s; }
+
+.burger-nav ul li a {
+  position: relative;
+  display: block;
+  padding: 5px;
+  font-size: 2em;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: white;
+  transition: 0.5s;
+  font-family: "Inter Variable", system-ui, sans-serif;
+  font-weight: 600;
+}
+
+.burger-nav ul li a::after {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: hsl(340, 100%, 63%);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s;
+}
+
+.burger-nav ul li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media screen and (max-width: 750px) {
+  .burger-menu {
+    display: block;
+    right: 18px;
+  }
+
+  .burger-nav {
+    transform: translateY(-8%);
+  }
+
+  .burger-nav ul li a:hover::after {
+    transform: scaleX(0);
+  }
+}
+</style>
+
+<script>
+// Full Page Burger Navigation
+let burgerMenuToggle = document.querySelector("#burger-toggle");
+let burgerMenuLinks = document.querySelectorAll(".burger-nav li a");
+burgerMenuLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    burgerMenuToggle.checked = false;
+  });
+});
+</script>

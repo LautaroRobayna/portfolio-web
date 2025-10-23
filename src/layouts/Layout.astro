@@ -1,7 +1,9 @@
 ---
-import "@fontsource-variable/onest";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import "@fontsource/cinzel";
+import "@fontsource-variable/inter";
+import Navbar from "../components/shared/Navbar.astro";
+import Footer from "../components/footer/Footer.astro";
+import Background from "../components/shared/Background.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -9,48 +11,68 @@ interface Props {
   description: string;
 }
 
-const { description, title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Astro Basics</title>
   </head>
-  <body>
-    <div
-      class="absolute top-0 z-[-2] h-screen w-screen bg-neutral-950
-		 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
-    >
-    </div>
-    <Header />
+  <body class="relative">
+    <Background />
+    <Navbar />
     <slot />
     <Footer />
   </body>
 </html>
 
 <style is:global>
+  * {
+    box-sizing: border-box;
+  }
+
   :root {
-    color-scheme: light dark;
+    color-scheme: dark;
+    --viego-blue: #3498db;
+    --viego-dark: #1a1e23;
+    --viego-darker: #0a0a0a;
+    --viego-gray: #2c2c2c;
+    --viego-text: #ffffff;
+    --viego-text-muted: #b0b0b0;
   }
 
   html {
-    font-family: "Onest Variable", system-ui, sans-serif;
+    font-family: "Inter Variable", system-ui, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Cinzel", serif;
+    font-weight: 600;
+    letter-spacing: 0.02em;
   }
 
   body {
-    background: #0a0a0a;
+    margin: 0;
+    padding: 0;
+    color: var(--viego-text);
+    font-family: "Inter Variable", system-ui, sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    width: 100%;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
+  }
+
+  p, span, div, a, button, input, textarea {
+    font-family: "Inter Variable", system-ui, sans-serif;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -58,4 +80,415 @@ const { description, title } = Astro.props;
       scroll-behavior: auto;
     }
   }
+
+  /* Glitch Text Animation */
+  .glitch {
+    position: relative;
+  }
+
+  .glitch.active span:not(:last-child) {
+    animation-duration: 0.3s;
+  }
+
+  .glitch.active span:nth-child(odd) {
+    animation-name: slide-from-left;
+  }
+
+  .glitch.active span:nth-child(even) {
+    animation-name: slide-from-right;
+  }
+
+  .glitch.active span:last-child {
+    animation: reveal steps(1) forwards;
+    animation-delay: 0.6s;
+  }
+
+  .glitch span:not(:last-child) {
+    --ratio: calc(100% / var(--slice-count));
+    --top: calc(var(--ratio) * (var(--i) - 1));
+    --bottom: calc(var(--ratio) * (var(--slice-count) - var(--i)));
+    position: absolute;
+    white-space: nowrap;
+    clip-path: inset(var(--top) 0 var(--bottom) 0);
+  }
+
+  .glitch span:last-child {
+    opacity: 0;
+  }
+
+  @keyframes slide-from-left {
+    from { transform: translateX(-20%); }
+    to { transform: translateX(0); }
+  }
+
+  @keyframes slide-from-right {
+    from { transform: translateX(20%); }
+    to { transform: translateX(0); }
+  }
+
+  @keyframes reveal {
+    to { opacity: 1; }
+  }
+
+  /* Fade Up Animation */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+
+  .fade-up.active {
+    animation: fade-up 0.6s forwards;
+  }
+
+  @keyframes fade-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Staggered Rise In Text */
+  .staggered-rise-in {
+    position: relative;
+    display: flex;
+    white-space: pre;
+    overflow: hidden;
+  }
+
+  .staggered-rise-in span {
+    transform: translateY(100%);
+  }
+
+  .staggered-rise-in.active span {
+    animation: rise-in 1s forwards;
+  }
+
+  @keyframes rise-in {
+    to {
+      transform: translateY(-12%);
+    }
+  }
+
+  /* Cross Bar Glitch Text https://codepen.io/alphardex/pen/VwLLLNG */
+  .cross-bar-glitch {
+    position: relative;
+    font-family: "Cinzel", serif;
+    font-weight: 600;
+  }
+
+  .cross-bar-glitch.active .bars .bar {
+    animation: 0.6s cubic-bezier(0.4, 0.2, 0.175, 1) forwards;
+  }
+
+  .cross-bar-glitch.active .bars .bar:nth-child(odd) {
+    animation-name: slide-left-hide;
+  }
+
+  .cross-bar-glitch.active .bars .bar:nth-child(even) {
+    animation-name: slide-right-hide;
+  }
+
+  .cross-bar-glitch.active .glitch {
+    animation: reveal forwards 0.3s;
+    animation-delay: 0.6s;
+  }
+
+  .cross-bar-glitch.active .glitch span:not(:last-child) {
+    animation-duration: 0.3s;
+  }
+
+  .cross-bar-glitch.active .glitch span:nth-child(odd) {
+    animation-name: slide-from-left;
+  }
+
+  .cross-bar-glitch.active .glitch span:nth-child(even) {
+    animation-name: slide-from-right;
+  }
+
+  .cross-bar-glitch.active .glitch span:last-child {
+    animation: reveal steps(1) forwards;
+    animation-delay: 1.2s;
+  }
+
+  .cross-bar-glitch .bars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .cross-bar-glitch.active .bars {
+    opacity: 1;
+  }
+
+  .cross-bar-glitch .bars .bar {
+    width: 100%;
+    flex: 1;
+    background: currentColor;
+    border-radius: 0;
+  }
+
+  .cross-bar-glitch .bars .bar:nth-child(odd) {
+    transform: translateX(100%);
+  }
+
+  .cross-bar-glitch .bars .bar:nth-child(even) {
+    transform: translateX(-100%);
+  }
+
+  .cross-bar-glitch .bars .bar:nth-child(1) {
+    animation-delay: 0.3s;
+  }
+
+  .cross-bar-glitch .bars .bar:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .cross-bar-glitch .bars .bar:nth-child(3) {
+    animation-delay: 0.5s;
+  }
+
+  .cross-bar-glitch .bars .bar:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+
+  .cross-bar-glitch .bars .bar:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+
+  .cross-bar-glitch .glitch {
+    opacity: 0;
+  }
+
+  .cross-bar-glitch .glitch span:not(:last-child) {
+    --ratio: calc(100% / var(--slice-count));
+    --top: calc(var(--ratio) * (var(--i) - 1));
+    --bottom: calc(var(--ratio) * (var(--slice-count) - var(--i)));
+    position: absolute;
+    color: currentColor;
+    white-space: nowrap;
+    clip-path: inset(var(--top) 0 var(--bottom) 0);
+  }
+
+  .cross-bar-glitch .glitch span:last-child {
+    opacity: 0;
+  }
+
+  @keyframes slide-left-hide {
+    0% {
+      transform: translateX(100%);
+      opacity: 1;
+    }
+    90% {
+      transform: translateX(-100%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes slide-right-hide {
+    0% {
+      transform: translateX(-100%);
+      opacity: 1;
+    }
+    90% {
+      transform: translateX(100%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+
+
+  /* Hero Section */
+  .hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-content {
+    max-width: 800px;
+    padding: 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    margin-bottom: 1.5rem;
+    color: var(--viego-blue);
+    text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+    color: var(--viego-text-muted);
+    font-family: "Inter Variable", system-ui, sans-serif;
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--viego-text-muted);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-badge {
+    margin-bottom: 2rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Normal Section */
+  .normal-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+  }
+
+  .section-content {
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .titles {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .titles h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin-bottom: 1rem;
+    color: var(--viego-blue);
+  }
+
+  .titles h2 {
+    font-size: 1.25rem;
+    color: var(--viego-text-muted);
+    font-family: "Inter Variable", system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  .projects-container {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+
+  .projects-container.active {
+    animation: fade-up 0.6s forwards;
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .hero-content {
+      padding: 1rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .normal-section {
+      padding: 2rem 1rem;
+    }
+  }
 </style>
+
+<script>
+// Cross Bar Glitch Text https://codepen.io/alphardex/pen/VwLLLNG
+const random = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Cross Bar Glitch Text
+  let crossBarGlitchTexts = document.querySelectorAll(".cross-bar-glitch");
+  crossBarGlitchTexts.forEach(text => {
+    let content = text.textContent;
+    text.textContent = "";
+    let slice = text.dataset.slice;
+    let glitchText = document.createElement("div");
+    glitchText.className = "glitch";
+    glitchText.style.setProperty("--slice-count", slice);
+    glitchText.style.fontFamily = '"Cinzel", serif';
+    glitchText.style.fontWeight = '600';
+    for (let i = 0; i <= Number(slice); i++) {
+      let span = document.createElement("span");
+      span.textContent = content;
+      span.style.setProperty("--i", `${i + 1}`);
+      span.style.fontFamily = '"Cinzel", serif';
+      span.style.fontWeight = '600';
+      if (i !== Number(slice)) {
+        span.style.animationDelay = `${800 + random(100, 300)}ms`;
+      }
+      glitchText.append(span);
+    }
+    text.appendChild(glitchText);
+    let bars = document.createElement("div");
+    bars.className = "bars";
+    for (let i = 0; i < 5; i++) {
+      let bar = document.createElement("div");
+      bar.className = "bar";
+      bars.append(bar);
+    }
+    text.append(bars);
+  });
+
+  // Staggered Rise In Text https://codepen.io/alphardex/pen/qBEmGbw
+  let staggeredRiseInTexts = document.querySelectorAll(".staggered-rise-in");
+  staggeredRiseInTexts.forEach(text => {
+    let letters = text.textContent.split("");
+    text.textContent = "";
+    letters.forEach((letter, i) => {
+      let span = document.createElement("span");
+      span.textContent = letter;
+      span.style.animationDelay = `${i / 20}s`;
+      text.append(span);
+    });
+  });
+
+  // Observe the elements which have animations to fire.
+  let observer = new IntersectionObserver(
+    entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    },
+    { rootMargin: "0px 0px -140px" }
+  );
+
+  let titles = document.querySelectorAll(".titles > *");
+  titles.forEach(title => observer.observe(title));
+
+  let paragraphs = document.querySelectorAll("p");
+  paragraphs.forEach(p => observer.observe(p));
+});
+</script>

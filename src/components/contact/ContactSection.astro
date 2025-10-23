@@ -1,0 +1,27 @@
+---
+import ContactContent from "./ContactContent.astro";
+---
+
+<section class="w-full min-h-screen flex items-center justify-center py-20" id="contact">
+  <div class="w-full max-w-4xl px-4 flex flex-col items-center">
+    <div class="titles mb-6">
+      <h1 class="cross-bar-glitch" data-slice="20">CONTACT</h1>
+    </div>
+    <ContactContent />
+  </div>
+</section>
+
+<style>
+.titles {
+  display: grid;
+  justify-items: center;
+  letter-spacing: 0.25em;
+}
+
+.titles h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  font-family: "Cinzel", serif;
+}
+</style>

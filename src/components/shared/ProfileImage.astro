@@ -1,0 +1,21 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  size?: "sm" | "md" | "lg";
+}
+
+const { src, alt, size = "md" } = Astro.props;
+
+const sizes = {
+  sm: "w-20 h-20",
+  md: "w-48 h-48",
+  lg: "w-56 h-56"
+};
+---
+
+<img
+  src={src}
+  alt={alt}
+  class={`rounded-full object-cover border-4 border-[#3498db] ${sizes[size]}`}
+/>

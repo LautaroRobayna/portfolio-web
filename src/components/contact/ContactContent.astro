@@ -1,0 +1,42 @@
+---
+import GlitchButton from "../shared/GlitchButton.astro";
+import LinkedInIcon from "../icons/LinkedIn.astro";
+import GitHubIcon from "../icons/GitHub.astro";
+import PhoneIcon from "../icons/PhoneIcon.astro";
+import MailIcon from "../icons/MailIcon.astro";
+import DownloadIcon from "../icons/DownloadIcon.astro";
+---
+
+<div class="flex flex-col items-center gap-8 w-full">
+  <p class="text-lg md:text-xl text-gray-300 text-center max-w-2xl">
+    Let's work together!
+  </p>
+
+  <div class="flex flex-col gap-3 text-gray-300">
+    <div class="flex items-center gap-3 text-base md:text-lg">
+      <MailIcon class="w-5 h-5" />
+      <span>robaynalautaro64@gmail.com</span>
+    </div>
+    <div class="flex items-center gap-3 text-base md:text-lg">
+      <PhoneIcon class="w-5 h-5" />
+      <span>+598 91 647 759</span>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-4 justify-center">
+    <GlitchButton href="https://www.linkedin.com/in/lautaro-robayna/" target="_blank" rel="noopener noreferrer">
+      <LinkedInIcon class="w-5 h-5" />
+      LinkedIn
+    </GlitchButton>
+
+    <GlitchButton href="https://github.com/LautaroRobayna" target="_blank" rel="noopener noreferrer">
+      <GitHubIcon class="w-5 h-5" />
+      GitHub
+    </GlitchButton>
+
+    <GlitchButton href="/cv/CV.pdf" download>
+      <DownloadIcon class="w-5 h-5" />
+      Download CV
+    </GlitchButton>
+  </div>
+</div>
