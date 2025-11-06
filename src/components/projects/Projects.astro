@@ -1,6 +1,8 @@
 ---
 import NextIcon from "../icons/NextIcon.astro";
 import TailwindIcon from "../icons/Tailwind.astro";
+import HTBIcon from "../icons/HTBIcon.astro";
+import MediumIcon from "../icons/MediumIcon.astro";
 import RoundedButton from "../shared/RoundedButton.astro";
 import GitHubIcon from "../icons/GitHub.astro";
 import LinkIcon from "../icons/Link.astro";
@@ -16,6 +18,16 @@ const TAGS = {
     class: "bg-black text-white",
     icon: TailwindIcon,
   },
+  HTB: {
+    name: "HackTheBox",
+    class: "bg-black text-white",
+    icon: HTBIcon,
+  },
+  MEDIUM: {
+    name: "Medium",
+    class: "bg-black text-white",
+    icon: MediumIcon,
+  },
 };
 
 const PROJECTS = [
@@ -27,6 +39,15 @@ const PROJECTS = [
     github: "https://github.com/LautaroRobayna/tienda-macetas",
     image: "/projects/svgl.webp",
     tags: [TAGS.NEXT, TAGS.TAILWIND],
+  },
+  {
+    title: "HTB Writeups & CTF Challenges",
+    description:
+      "Cybersecurity writeups and walkthroughs of Hack The Box machines published on Medium to share knowledge and improve penetration testing skills.",
+    link: "https://medium.com/@robaynalautaro64",
+    github: "https://medium.com/@robaynalautaro64",
+    image: "/projects/medium.webp",
+    tags: [TAGS.HTB, TAGS.MEDIUM],
   },
 ];
 ---
